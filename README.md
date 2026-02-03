@@ -1,0 +1,2 @@
+# Abide
+LOVE GOD, LOVE PEOPLE.
