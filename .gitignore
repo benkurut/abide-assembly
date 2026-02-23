@@ -1,0 +1,10 @@
+Visual Studio Code.app/
+VSCode-*.zip
+.DS_Store
+**/node_modules/
+**/dist/
+**/dist-ssr/
+**/.vite/
+**/*.local
+**/.env
+**/.env.*
