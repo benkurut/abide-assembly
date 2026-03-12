@@ -3,11 +3,12 @@
  * Prayer request form with validation and Web3Forms email integration
  */
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast, Toaster } from 'sonner';
-import { MdEmail } from 'react-icons/md';
+import { MdAccessTime, MdEmail, MdLocationOn, MdWbSunny } from 'react-icons/md';
 
 const prayerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(50),
@@ -16,6 +17,40 @@ const prayerSchema = z.object({
 });
 
 type PrayerFormData = z.infer<typeof prayerSchema>;
+
+interface WeatherData {
+  temperature: number;
+  windSpeed: number;
+  code: number;
+}
+
+const serviceTimes = ['Sunday 10 AM EST'];
+const mapQuery = 'Willoughby, OH';
+const weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=41.6398&longitude=-81.4065&current_weather=true&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America/New_York';
+
+const weatherDescriptions: Record<number, string> = {
+  0: 'Clear sky',
+  1: 'Mostly clear',
+  2: 'Partly cloudy',
+  3: 'Overcast',
+  45: 'Foggy',
+  48: 'Rime fog',
+  51: 'Light drizzle',
+  53: 'Drizzle',
+  55: 'Heavy drizzle',
+  61: 'Light rain',
+  63: 'Rain',
+  65: 'Heavy rain',
+  71: 'Light snow',
+  73: 'Snow',
+  75: 'Heavy snow',
+  80: 'Rain showers',
+  81: 'Heavy showers',
+  82: 'Violent showers',
+  95: 'Thunderstorm',
+  96: 'Thunderstorm with hail',
+  99: 'Severe thunderstorm',
+};
 
 export default function Contact() {
   const {
@@ -26,6 +61,38 @@ export default function Contact() {
   } = useForm<PrayerFormData>({
     resolver: zodResolver(prayerSchema),
   });
+
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [weatherError, setWeatherError] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetch(weatherUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Weather response not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (!isMounted || !data?.current_weather) return;
+        setWeather({
+          temperature: data.current_weather.temperature,
+          windSpeed: data.current_weather.windspeed,
+          code: data.current_weather.weathercode,
+        });
+      })
+      .catch(() => {
+        if (isMounted) {
+          setWeatherError(true);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const onSubmit = async (data: PrayerFormData) => {
     try {
@@ -74,7 +141,7 @@ export default function Contact() {
     <>
       <Toaster position="top-center" />
       <motion.section
-        className="max-w-5xl mx-auto my-20 bg-slate-50/95 backdrop-blur rounded-2xl shadow-sm p-12 md:p-16"
+        className="max-w-5xl mx-auto my-20 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-lg p-12 md:p-16"
         id="contact"
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -103,7 +170,7 @@ export default function Contact() {
 
         <motion.form
           onSubmit={handleSubmit(onSubmit)}
-          className="max-w-md mx-auto bg-white rounded-xl shadow-sm p-8 mb-12 border border-slate-100"
+          className="max-w-md mx-auto backdrop-blur-sm bg-white/10 rounded-xl shadow-lg p-8 mb-12 border border-white/20"
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
@@ -115,9 +182,9 @@ export default function Contact() {
               type="text"
               placeholder="Enter your name"
               {...register('name')}
-              className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-slate-800 transition-all"
+              className="w-full px-4 py-2.5 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent focus:bg-white/15 text-slate-800 placeholder-slate-600 transition-all"
             />
-            {errors.name && <p className="text-amber-600 text-sm mt-2 font-medium">{errors.name.message}</p>}
+            {errors.name && <p className="text-amber-300 text-sm mt-2 font-medium">{errors.name.message}</p>}
           </motion.div>
 
           <motion.div className="mb-6" variants={itemVariants}>
@@ -126,9 +193,9 @@ export default function Contact() {
               type="email"
               placeholder="your@email.com"
               {...register('email')}
-              className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-slate-800 transition-all"
+              className="w-full px-4 py-2.5 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent focus:bg-white/15 text-slate-800 placeholder-slate-600 transition-all"
             />
-            {errors.email && <p className="text-amber-600 text-sm mt-2 font-medium">{errors.email.message}</p>}
+            {errors.email && <p className="text-amber-300 text-sm mt-2 font-medium">{errors.email.message}</p>}
           </motion.div>
 
           <motion.div className="mb-6" variants={itemVariants}>
@@ -137,9 +204,9 @@ export default function Contact() {
               placeholder="Share your prayer request with us..."
               rows={4}
               {...register('prayer')}
-              className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-slate-800 resize-none transition-all"
+              className="w-full px-4 py-2.5 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent focus:bg-white/15 text-slate-800 placeholder-slate-600 resize-none transition-all"
             />
-            {errors.prayer && <p className="text-amber-600 text-sm mt-2 font-medium">{errors.prayer.message}</p>}
+            {errors.prayer && <p className="text-amber-300 text-sm mt-2 font-medium">{errors.prayer.message}</p>}
           </motion.div>
 
           <motion.button
@@ -153,6 +220,67 @@ export default function Contact() {
         </motion.form>
 
         <motion.div
+          className="grid md:grid-cols-2 gap-8 mb-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+        >
+          <motion.div
+            className="backdrop-blur-sm bg-white/10 rounded-xl shadow-lg p-8 border border-white/20 hover:border-white/30 hover:bg-white/15 transition-all duration-300"
+            variants={itemVariants}
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <MdLocationOn className="text-accent text-3xl" />
+              <h3 className="text-xl font-semibold text-slate-900">Visit Us</h3>
+            </div>
+            <p className="text-slate-700 mb-6">{mapQuery}</p>
+
+            <div className="flex items-center gap-3 mb-3 text-slate-900 font-semibold">
+              <MdAccessTime className="text-accent text-2xl" />
+              Service Times
+            </div>
+            <ul className="text-slate-700 mb-6 space-y-1">
+              {serviceTimes.map((time) => (
+                <li key={time}>{time}</li>
+              ))}
+            </ul>
+
+            <div className="flex items-center gap-3 mb-3 text-slate-900 font-semibold">
+              <MdWbSunny className="text-accent text-2xl" />
+              Current Weather
+            </div>
+            {weather ? (
+              <div className="text-slate-700">
+                <p className="text-2xl font-semibold text-primary">
+                  {Math.round(weather.temperature)}°F
+                </p>
+                <p className="text-sm">
+                  {weatherDescriptions[weather.code] || 'Current conditions'} · Wind {Math.round(weather.windSpeed)} mph
+                </p>
+              </div>
+            ) : (
+              <p className="text-slate-600 text-sm">
+                {weatherError ? 'Weather unavailable right now.' : 'Loading weather...'}
+              </p>
+            )}
+          </motion.div>
+
+          <motion.div
+            className="backdrop-blur-sm bg-white/10 rounded-xl shadow-lg overflow-hidden border border-white/20 hover:border-white/30 transition-all duration-300"
+            variants={itemVariants}
+          >
+            <iframe
+              title="Abide Church location map"
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+              className="w-full h-72 md:h-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </motion.div>
+        </motion.div>
+
+        <motion.div
           className="grid md:grid-cols-1 gap-8 max-w-md mx-auto"
           variants={containerVariants}
           initial="hidden"
@@ -160,7 +288,7 @@ export default function Contact() {
           viewport={{ once: true, margin: '-100px' }}
         >
           <motion.div
-            className="bg-white rounded-xl shadow-sm p-8 flex items-start gap-5 border border-slate-100 hover:shadow-md transition-shadow"
+            className="backdrop-blur-sm bg-white/10 rounded-xl shadow-lg p-8 flex items-start gap-5 border border-white/20 hover:border-white/30 hover:bg-white/15 transition-all duration-300"
             variants={itemVariants}
           >
             <MdEmail className="text-accent text-3xl flex-shrink-0 mt-1" />

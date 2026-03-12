@@ -20,7 +20,7 @@ export default function About() {
 
   return (
     <motion.section
-      className="max-w-5xl mx-auto my-20 bg-white/95 backdrop-blur rounded-2xl shadow-sm p-12 md:p-16"
+      className="max-w-5xl mx-auto my-20 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-lg p-12 md:p-16"
       id="about"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -69,14 +69,14 @@ export default function About() {
         whileInView="show"
         viewport={{ once: true, margin: '-100px' }}
       >
-        <motion.div className="bg-slate-50 rounded-xl p-8 border border-slate-100" variants={itemVariants}>
+        <motion.div className="backdrop-blur-sm bg-white/10 rounded-xl p-8 border border-white/20 hover:border-white/30 hover:bg-white/15 transition-all duration-300" variants={itemVariants}>
           <h4 className="text-accent text-2xl font-display font-bold mb-4 tracking-tight">Vision</h4>
           <p className="text-slate-700 leading-relaxed">
             To inspire and guide all people to seek the truth that sets them free and leads to abundant life, found only in and through Jesus Christ.
           </p>
         </motion.div>
 
-        <motion.div className="bg-slate-50 rounded-xl p-8 border border-slate-100" variants={itemVariants}>
+        <motion.div className="backdrop-blur-sm bg-white/10 rounded-xl p-8 border border-white/20 hover:border-white/30 hover:bg-white/15 transition-all duration-300" variants={itemVariants}>
           <h4 className="text-accent text-2xl font-display font-bold mb-4 tracking-tight">Mission</h4>
           <p className="text-slate-700 leading-relaxed">
             Our mission is to Love God and Love People. To be a Bible-based, Christ-centered, and Spirit-led community that welcomes all people with love, compassion, and grace. We strive to nurture spiritual growth, foster authentic relationships, and serve our neighbors with love, humility, and generosity. Through worship, discipleship, and outreach, we seek to reflect Christ's love in the world, transforming lives for His glory.

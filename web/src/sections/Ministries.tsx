@@ -4,6 +4,7 @@
  */
 import { motion } from 'framer-motion';
 import { MdPeople, MdFemale, MdMale } from 'react-icons/md';
+import { Accordion } from '../components/Accordion';
 
 const ministries = [
   {
@@ -72,44 +73,46 @@ export default function Ministries() {
       </motion.div>
 
       <motion.div
-        className="grid md:grid-cols-3 gap-8"
-        variants={container}
+        className=""
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-100px' }}
       >
-        {ministries.map((ministry) => {
-          const IconComponent = ministry.icon;
-          return (
-            <motion.div
-              key={ministry.id}
-              className="bg-white rounded-2xl shadow-sm border border-slate-100 p-10 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              variants={item}
-            >
-              <div className="flex items-center justify-center w-16 h-16 bg-accent/10 rounded-full mb-6">
-                <IconComponent className="text-accent text-3xl" />
-              </div>
-
-              <h3 className="text-2xl font-display font-bold text-primary mb-3 tracking-tight">
-                {ministry.name}
-              </h3>
-
-              <p className="text-slate-700 leading-relaxed mb-6">
-                {ministry.description}
-              </p>
-
-              <div className="space-y-2">
-                <p className="text-sm font-semibold text-slate-900 mb-3">Key Values</p>
-                {ministry.values.map((value, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-accent rounded-full" />
-                    <span className="text-sm text-slate-700">{value}</span>
+        <Accordion
+          items={ministries.map((ministry) => {
+            const IconComponent = ministry.icon;
+            return {
+              id: ministry.id,
+              title: ministry.name,
+              preview: ministry.description.substring(0, 80) + '...',
+              children: (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="flex items-center justify-center w-12 h-12 bg-accent/10 rounded-full flex-shrink-0">
+                      <IconComponent className="text-accent text-2xl" />
+                    </div>
+                    <h4 className="text-lg font-semibold text-primary">{ministry.name}</h4>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          );
-        })}
+                  <p className="text-slate-700 leading-relaxed">
+                    {ministry.description}
+                  </p>
+                  <div className="mt-4 pt-4 border-t border-slate-100">
+                    <p className="text-sm font-semibold text-slate-900 mb-3">Key Values</p>
+                    <div className="space-y-2">
+                      {ministry.values.map((value, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-accent rounded-full" />
+                          <span className="text-sm text-slate-700">{value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ),
+            };
+          })}
+          allowMultiple={true}
+        />
       </motion.div>
 
       <motion.div

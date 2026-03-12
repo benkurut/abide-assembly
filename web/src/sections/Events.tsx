@@ -4,6 +4,7 @@
  */
 import { motion } from 'framer-motion';
 import { MdEvent, MdFavorite } from 'react-icons/md';
+import { Accordion } from '../components/Accordion';
 
 const container = {
   hidden: { opacity: 0, y: 16 },
@@ -85,40 +86,48 @@ export default function Events() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
-        className="mt-10 grid gap-6"
+        className="mt-10"
       >
         {upcomingEvents.length === 0 ? (
           <div className="bg-white border border-dashed border-slate-200 rounded-2xl p-8 text-center text-slate-500">
             No upcoming events are scheduled right now. Check back soon!
           </div>
         ) : (
-          upcomingEvents.map((event) => {
-            const eventDate = parseEventDate(event.date);
-            return (
-              <div key={event.id} className="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 md:p-8 text-left">
-                <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-primary">
-                  <span className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full">
-                    <MdFavorite className="text-base" />
-                    {event.title}
-                  </span>
-                  <span className="text-slate-500">{getRelativeLabel(eventDate)} • {formatDate(eventDate)}</span>
-                </div>
-                <div className="mt-6 overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-60 md:h-72 object-contain"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="text-slate-600 mt-4 leading-relaxed">{event.summary}</p>
-                <blockquote className="mt-6 border-l-4 border-accent pl-4 text-slate-600 italic">
-                  &ldquo;{event.quote}&rdquo;
-                </blockquote>
-                <p className="text-slate-600 mt-5 leading-relaxed">{event.note}</p>
-              </div>
-            );
-          })
+          <Accordion
+            items={upcomingEvents.map((event) => {
+              const eventDate = parseEventDate(event.date);
+              return {
+                id: event.id,
+                title: event.title,
+                preview: `${getRelativeLabel(eventDate)} • ${event.summary.substring(0, 60)}...`,
+                children: (
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-primary">
+                      <span className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full">
+                        <MdFavorite className="text-base" />
+                        {event.title}
+                      </span>
+                      <span className="text-slate-500">{getRelativeLabel(eventDate)} • {formatDate(eventDate)}</span>
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-60 md:h-72 object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                    <p className="text-slate-600 leading-relaxed">{event.summary}</p>
+                    <blockquote className="border-l-4 border-accent pl-4 text-slate-600 italic">
+                      &ldquo;{event.quote}&rdquo;
+                    </blockquote>
+                    <p className="text-slate-600 leading-relaxed">{event.note}</p>
+                  </div>
+                ),
+              };
+            })}
+            allowMultiple={true}
+          />
         )}
       </motion.div>
 
@@ -135,31 +144,37 @@ export default function Events() {
             No past events yet.
           </div>
         ) : (
-          <div className="grid gap-6">
-            {pastEvents.map((event) => {
+          <Accordion
+            items={pastEvents.map((event) => {
               const eventDate = parseEventDate(event.date);
-              return (
-                <div key={event.id} className="bg-white border border-slate-100 rounded-2xl p-6 md:p-8 text-left">
-                  <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-primary">
-                    <span className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full">
-                      <MdFavorite className="text-base" />
-                      {event.title}
-                    </span>
-                    <span className="text-slate-500">{formatDate(eventDate)}</span>
+              return {
+                id: `past-${event.id}`,
+                title: event.title,
+                preview: `${formatDate(eventDate)} • ${event.summary.substring(0, 60)}...`,
+                children: (
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-primary">
+                      <span className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full">
+                        <MdFavorite className="text-base" />
+                        {event.title}
+                      </span>
+                      <span className="text-slate-500">{formatDate(eventDate)}</span>
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-56 md:h-64 object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                    <p className="text-slate-600 leading-relaxed">{event.summary}</p>
                   </div>
-                  <div className="mt-5 overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="w-full h-56 md:h-64 object-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                  <p className="text-slate-600 mt-4 leading-relaxed">{event.summary}</p>
-                </div>
-              );
+                ),
+              };
             })}
-          </div>
+            allowMultiple={true}
+          />
         )}
       </motion.div>
     </section>

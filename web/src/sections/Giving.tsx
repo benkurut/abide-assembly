@@ -4,6 +4,7 @@
  */
 import { motion } from 'framer-motion';
 import { MdVolunteerActivism, MdTrendingUp, MdGroups, MdHeartBroken } from 'react-icons/md';
+import { Accordion } from '../components/Accordion';
 
 const givingImpact = [
   {
@@ -75,36 +76,42 @@ export default function Giving() {
       </motion.div>
 
       <motion.div
-        className="grid md:grid-cols-2 gap-10 mb-16"
-        variants={container}
+        className="mb-16"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-100px' }}
       >
-        {givingImpact.map((impact) => {
-          const IconComponent = impact.icon;
-          return (
-            <motion.div
-              key={impact.id}
-              className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition-all duration-300"
-              variants={item}
-            >
-              <div className="flex gap-5">
-                <div className="flex-shrink-0">
-                  <IconComponent className="text-accent text-3xl" />
+        <Accordion
+          items={givingImpact.map((impact) => {
+            const IconComponent = impact.icon;
+            return {
+              id: impact.id,
+              title: impact.title,
+              preview: impact.description,
+              children: (
+                <div className="space-y-4">
+                  <div className="flex gap-4 items-start">
+                    <div className="flex-shrink-0 mt-1">
+                      <IconComponent className="text-accent text-2xl" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-lg font-bold text-primary mb-2 tracking-tight">
+                        {impact.title}
+                      </h4>
+                      <p className="text-slate-700 leading-relaxed">
+                        {impact.description}
+                      </p>
+                      <p className="text-sm text-slate-600 mt-3">
+                        Your generous giving directly enables this ministry and creates lasting impact in our community.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-primary mb-2 tracking-tight">
-                    {impact.title}
-                  </h3>
-                  <p className="text-slate-700 leading-relaxed">
-                    {impact.description}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
+              ),
+            };
+          })}
+          allowMultiple={true}
+        />
       </motion.div>
 
       <motion.div

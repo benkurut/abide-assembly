@@ -4,7 +4,6 @@
  */
 import { motion } from 'framer-motion';
 
-
 export default function Hero() {
   return (
     <section className="bg-gradient-to-br from-primary via-primary to-secondary text-white text-center py-28 px-5 rounded-b-3xl overflow-hidden">
@@ -40,6 +39,24 @@ export default function Hero() {
       >
         Remain in Him. Grow in Grace. Experience Life.
       </motion.p>
+      
+      {/* Daily Bible Verse */}
+      <motion.div 
+        className="backdrop-blur-md bg-white/20 rounded-2xl p-8 max-w-3xl mx-auto mt-12 border border-white/30 shadow-2xl hover:bg-white/25 transition-all duration-300"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+      >
+        <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wide mb-3">
+          Daily Verse
+        </h3>
+        <blockquote className="text-lg md:text-xl text-white leading-relaxed italic mb-4">
+          "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
+        </blockquote>
+        <p className="text-right text-sm font-semibold text-white/80">
+          — John 3:16 (NIV)
+        </p>
+      </motion.div>
     </section>
   );
 }
