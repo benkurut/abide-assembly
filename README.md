@@ -54,7 +54,7 @@ npm run build
 
 The production build is automatically deployed to GitHub Pages when you push to `main`.
 
-**Live Site:** https://prasannak026.github.io/Abide/
+**Live Site:** https://abideassembly.com/
 
 ## Features
 

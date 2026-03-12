@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Prasannak026.github.io/Abide",
+  "homepage": "https://abideassembly.com",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
