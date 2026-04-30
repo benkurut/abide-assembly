@@ -85,7 +85,7 @@ export default function Giving() {
           </div>
           <p className="text-slate-700 mb-4">Scan the QR code with your phone to quickly access our online giving page.</p>
           <div className="bg-white rounded-lg p-3 w-24 h-24 mx-auto">
-            <img src="/QR-giving.png" alt="Giving QR Code" className="w-full h-full" />
+            <img src={`${import.meta.env.BASE_URL}QR-giving.png`} alt="Giving QR Code" className="w-full h-full object-contain" />
           </div>
         </motion.div>
 

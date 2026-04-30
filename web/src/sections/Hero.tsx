@@ -66,13 +66,24 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
       >
-        <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-accent text-primary px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <a
+          href="#contact"
+          className="inline-flex items-center justify-center gap-2 bg-accent text-primary px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+        >
           Plan Your Visit <MdArrowForward className="text-lg" />
         </a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white/20 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/30 transition-all duration-300 border border-white/40">
+        <a
+          href="https://www.youtube.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 bg-white/20 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/30 transition-all duration-300 border border-white/40"
+        >
           Watch Online <MdArrowForward className="text-lg" />
         </a>
-        <a href="#" className="inline-flex items-center justify-center gap-2 bg-white/20 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/30 transition-all duration-300 border border-white/40">
+        <a
+          href="#"
+          className="inline-flex items-center justify-center gap-2 bg-white/20 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/30 transition-all duration-300 border border-white/40"
+        >
           Get Connected <MdArrowForward className="text-lg" />
         </a>
       </motion.div>
