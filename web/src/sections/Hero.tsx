@@ -56,7 +56,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
       >
-        Abide Church exists to help everyone seek the truth found in the person and work of Jesus Christ. A Bible-Based, Christ-Centered, and Spirit-Led church with a vision to serve the communities surrounding North-East Cleveland, OH.
+        Abide Church exists to help everyone seek the truth found in the person and work of Jesus Christ. A Bible-based, Christ-centered, and Spirit-led church with a vision to serve the communities surrounding North-East Cleveland, OH.
       </motion.p>
 
       {/* CTA Buttons */}

@@ -310,10 +310,9 @@ export default function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          "Cast all your anxiety on Him because He cares for you."<br />
-          <span className="text-accent font-medium">— 1 Peter 5:7</span>
+          "The earnest prayer of a righteous person has great power and produces wonderful results." - James 5:16
         </motion.p>
       </motion.section>
     </>
-  );
-}
+    );
+  }

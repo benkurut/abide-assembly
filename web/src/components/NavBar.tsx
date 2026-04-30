@@ -17,12 +17,6 @@ export default function NavBar() {
         {/* Navigation Buttons */}
         <div className="flex flex-wrap gap-2">
         <a
-          href="#founders"
-          className="text-xs md:text-sm px-3 md:px-4 py-2 text-primary hover:bg-primary/5 rounded-lg transition-colors duration-300"
-        >
-          Founders
-        </a>
-        <a
           href="#events"
           className="text-xs md:text-sm px-3 md:px-4 py-2 text-primary hover:bg-primary/5 rounded-lg transition-colors duration-300"
         >
