@@ -24,8 +24,8 @@ interface WeatherData {
   code: number;
 }
 
-const serviceTimes = ['Sunday 10 AM EST'];
-const mapQuery = 'Willoughby, OH';
+const serviceTimes = ['Sunday 4:00 PM', 'Fellowship: 5:30-6:00 PM'];
+const address = '28870 Chardon Rd, Willoughby Hills, OH 44092';
 const weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=41.6398&longitude=-81.4065&current_weather=true&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America/New_York';
 
 const weatherDescriptions: Record<number, string> = {
@@ -155,7 +155,7 @@ export default function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          Prayer Requests
+          We'd Love to Hear From You
         </motion.h2>
 
         <motion.p
@@ -165,7 +165,7 @@ export default function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          We care about you and your journey. Share your prayer request below, and our team will intercede for you.
+          Send us a message, share a prayer request, or ask any questions about Abide Assembly of God. We're here to help!
         </motion.p>
 
         <motion.form
@@ -199,9 +199,9 @@ export default function Contact() {
           </motion.div>
 
           <motion.div className="mb-6" variants={itemVariants}>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">Prayer Request</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Message or Prayer Request</label>
             <textarea
-              placeholder="Share your prayer request with us..."
+              placeholder="Share your message or prayer request with us..."
               rows={4}
               {...register('prayer')}
               className="w-full px-4 py-2.5 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent focus:bg-white/15 text-slate-800 placeholder-slate-600 resize-none transition-all"
@@ -215,7 +215,7 @@ export default function Contact() {
             className="w-full bg-accent text-primary font-semibold py-3 rounded-lg hover:shadow-md hover:bg-opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             variants={itemVariants}
           >
-            {isSubmitting ? 'Submitting...' : 'Submit Prayer Request'}
+            {isSubmitting ? 'Sending...' : 'Send Message'}
           </motion.button>
         </motion.form>
 
@@ -234,7 +234,8 @@ export default function Contact() {
               <MdLocationOn className="text-accent text-3xl" />
               <h3 className="text-xl font-semibold text-slate-900">Visit Us</h3>
             </div>
-            <p className="text-slate-700 mb-6">{mapQuery}</p>
+            <p className="text-slate-700 font-semibold mb-1">{address}</p>
+            <p className="text-sm text-slate-600 mb-6">Willoughby Hills, North-East Cleveland, OH</p>
 
             <div className="flex items-center gap-3 mb-3 text-slate-900 font-semibold">
               <MdAccessTime className="text-accent text-2xl" />
@@ -272,7 +273,7 @@ export default function Contact() {
           >
             <iframe
               title="Abide Church location map"
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
               className="w-full h-72 md:h-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -294,10 +295,10 @@ export default function Contact() {
             <MdEmail className="text-accent text-3xl flex-shrink-0 mt-1" />
             <div>
               <h3 className="font-semibold text-slate-900 mb-2">Email</h3>
-              <a href="mailto:benkurut@gmail.com" className="text-accent font-semibold hover:opacity-80 transition-opacity">
-                benkurut@gmail.com
+              <a href="mailto:contact@abideassembly.com" className="text-accent font-semibold hover:opacity-80 transition-opacity">
+                contact@abideassembly.com
               </a>
-              <p className="text-sm text-slate-600 mt-2">Ben & Anu Kurut</p>
+              <p className="text-sm text-slate-600 mt-2">Abide Assembly of God</p>
             </div>
           </motion.div>
         </motion.div>
