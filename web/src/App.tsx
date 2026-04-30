@@ -5,6 +5,8 @@
 import MainLayout from './layouts/MainLayout';
 import Hero from './sections/Hero';
 import About from './sections/About';
+import Leaders from './sections/Leaders';
+import CoreValues from './sections/CoreValues';
 import Events from './sections/Events';
 import MediaSection from './sections/MediaSection';
 import Contact from './sections/Contact';
@@ -18,6 +20,8 @@ export default function App() {
       <Hero />
       <main className="py-10 px-4">
         <About />
+        <Leaders />
+        <CoreValues />
         <Events />
         <Ministries />
         <MediaSection />
